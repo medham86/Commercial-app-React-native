@@ -25,10 +25,10 @@ const SignUp = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors , isValid},
+    formState: { errors, isValid },
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
-    mode:'onChange',
+    mode: "onChange",
     defaultValues: {
       fullName: "",
       email: "",
@@ -145,7 +145,9 @@ const SignUp = () => {
               errors={errors}
               name="email"
               render={({ message }) => (
-                <Text className="text-red-500 font-Poppins mt-1">{message}</Text>
+                <Text className="text-red-500 font-Poppins mt-1">
+                  {message}
+                </Text>
               )}
             />
           </View>
@@ -175,7 +177,7 @@ const SignUp = () => {
                     />
 
                     {value && (
-                      <View className="absolute right-3 top-3 ">
+                      <View className="absolute right-0 top-3 px-2 ">
                         {errors.password ? (
                           <Feather name="alert-circle" size={24} color="red" />
                         ) : (
@@ -187,29 +189,31 @@ const SignUp = () => {
                         )}
                       </View>
                     )}
+
+                    <Pressable
+                      className={`pr-4 ${value && !isValid ? 'right-6' : 'right-0'} top-3 absolute `}
+                      onPress={() => {
+                        setShowPassword(!showPassword);
+                      }}
+                    >
+                      {!showPassword ? (
+                        <Ionicons name="eye-off" size={24} color="black" />
+                      ) : (
+                        <Ionicons name="eye" size={24} color="black" />
+                      )}
+                    </Pressable>
                   </View>
                 )}
               />
-
-              <Pressable
-                className={`top-3 right-6 absolute pr-4`}
-                onPress={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                {!showPassword ? (
-                  <Ionicons name="eye-off" size={24} color="black" />
-                ) : (
-                  <Ionicons name="eye" size={24} color="black" />
-                )}
-              </Pressable>
             </View>
 
             <ErrorMessage
               errors={errors}
               name="password"
               render={({ message }) => (
-                <Text className="text-red-500 font-Poppins mt-1">{message}</Text>
+                <Text className="text-red-500 font-Poppins mt-1">
+                  {message}
+                </Text>
               )}
             />
           </View>

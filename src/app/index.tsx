@@ -22,6 +22,7 @@ export default function Page() {
        <Link href='/forget-password'>ForgetPassword</Link>
        <Link href='/verify-code'>Verification-Code</Link>
        <Link href='/reset-password'>Reset-password</Link>
+       
       </SafeAreaView>
     </SafeAreaProvider>
   );

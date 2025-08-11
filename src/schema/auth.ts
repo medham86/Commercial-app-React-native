@@ -48,10 +48,10 @@ export const resetPasswordSchema = z.object({
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/,
       "Password must contain characters , numbers  special characters"
-    ),
-
-   
-  
-});
+    )
+}).refine((data) => data.password1 === data.password2, {
+    message: "Passwords do not match",
+    path: ["password2"],
+  });
 
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>

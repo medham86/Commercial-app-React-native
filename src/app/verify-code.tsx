@@ -1,13 +1,8 @@
-import {
-  foregtPasswordSchema,
-  ForgetPasswordFormData,
-  
-} from "@/schema/auth";
 import Header from "@/shared/Header";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Link, router } from "expo-router";
 import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+
 import {
   View,
   Text,
@@ -15,7 +10,6 @@ import {
   TextInput,
   TouchableOpacity,
   NativeSyntheticEvent,
-  TextInputChangeEventData,
   TextInputKeyPressEventData,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -24,6 +18,7 @@ const VerifyCode = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
   const inputRefs = useRef<TextInput[]>([]);
+  
 
   const handleChange = (text: string, index: number) => {
     const newCode = [...code];
@@ -90,6 +85,7 @@ const VerifyCode = () => {
               Resend code
             </Link>
           </View>
+
           <TouchableOpacity
             className={`${
               isCodeComplete ? "bg-primary " : "bg-primary-400"

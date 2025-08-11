@@ -3,6 +3,7 @@ import Header from "@/shared/Header";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
@@ -15,6 +16,8 @@ import {
   TextInput,
   Pressable,
   TouchableOpacity,
+  Modal,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -22,10 +25,11 @@ const ResetPassword = () => {
   const [showPassword1, setShowPassword1] = useState<boolean>(false);
   const [showPassword2, setShowPassword2] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
+  const [modalVisiable, setModalVisiable] = useState<boolean>(false);
   const {
     handleSubmit,
     control,
+    watch,
     formState: { errors, isValid },
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
@@ -38,13 +42,11 @@ const ResetPassword = () => {
 
   // handlers
   const onSubmit = (data: ResetPasswordFormData) => {
-    if (data.password1 !== data.password2) return;
-
     setIsSubmitted(true);
-    console.log(data);
+    setModalVisiable(!modalVisiable);
     setTimeout(() => {
       setIsSubmitted(false);
-      router.push("login");
+      // router.push("login");
     }, 1000);
   };
 
@@ -59,8 +61,8 @@ const ResetPassword = () => {
 
           {/*Password 1*/}
 
-          <View className=" mb-5">
-            <Text className="font-Poppins-medium mb-2 text-gray-700">
+          <View className="mb-5">
+            <Text className="font-Poppins-medium mb-5 text-gray-700">
               Password
             </Text>
             <View className="relative">
@@ -68,23 +70,25 @@ const ResetPassword = () => {
                 control={control}
                 name="password1"
                 render={({ field: { value, onChange } }) => (
-                  <View>
+                  <View
+                    className={`flex-row items-center border ${
+                      errors.password1
+                        ? "border-red-500"
+                        : value
+                        ? "border-green-500"
+                        : "border-gray-300"
+                    } rounded-lg`}
+                  >
                     <TextInput
-                      className={`border ${
-                        errors.password1
-                          ? "border-red-500"
-                          : value
-                          ? "border-green-500"
-                          : "border-gray-300"
-                      } rounded-lg p-4 font-Poppins pr-10`}
-                      placeholder="Password"
+                      className="flex-1 p-4 font-poppins align-middle"
+                      placeholder="Enter new password"
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword1}
                     />
 
                     {value && (
-                      <View className="absolute right-3 top-3 ">
+                      <View className="px-2">
                         {errors.password1 ? (
                           <Feather name="alert-circle" size={24} color="red" />
                         ) : (
@@ -96,29 +100,31 @@ const ResetPassword = () => {
                         )}
                       </View>
                     )}
+
+                    <Pressable
+                      className={`pr-4 absolute ${
+                        errors.password1 && value ? "right-6" : "right-0"
+                      }`}
+                      onPress={() => {
+                        setShowPassword1(!showPassword1);
+                      }}
+                    >
+                      <Ionicons
+                        name={`${!showPassword1 ? "eye-off" : "eye"}`}
+                        size={24}
+                        color="black"
+                      />
+                    </Pressable>
                   </View>
                 )}
               />
-
-              <Pressable
-                className={`top-3 right-6 absolute pr-4`}
-                onPress={() => {
-                  setShowPassword1(!showPassword1);
-                }}
-              >
-                {!showPassword1 ? (
-                  <Ionicons name="eye-off" size={24} color="black" />
-                ) : (
-                  <Ionicons name="eye" size={24} color="black" />
-                )}
-              </Pressable>
             </View>
 
             <ErrorMessage
               errors={errors}
               name="password1"
               render={({ message }) => (
-                <Text className="text-red-500 font-Poppins mt-1">
+                <Text className="text-red-500 font-Poppins mt-2">
                   {message}
                 </Text>
               )}
@@ -127,32 +133,34 @@ const ResetPassword = () => {
 
           {/*Password 2*/}
 
-          <View className=" mb-5">
-            <Text className="font-Poppins-medium mb-2 text-gray-700">
-              Password
+          <View className="mb-5">
+            <Text className="font-Poppins-medium mb-1 text-gray-700">
+              Confirm Password
             </Text>
             <View className="relative">
               <Controller
                 control={control}
                 name="password2"
                 render={({ field: { value, onChange } }) => (
-                  <View>
+                  <View
+                    className={`flex-row items-center border ${
+                      errors.password2
+                        ? "border-red-500"
+                        : value
+                        ? "border-green-500"
+                        : "border-gray-300"
+                    } rounded-lg`}
+                  >
                     <TextInput
-                      className={`border ${
-                        errors.password2
-                          ? "border-red-500"
-                          : value
-                          ? "border-green-500"
-                          : "border-gray-300"
-                      } rounded-lg p-4 font-Poppins pr-10`}
-                      placeholder="Password"
+                      className="flex-1 p-4 font-Poppins align-middle"
+                      placeholder="Renter new password"
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword2}
                     />
 
                     {value && (
-                      <View className="absolute right-3 top-3 ">
+                      <View className="px-2">
                         {errors.password2 ? (
                           <Feather name="alert-circle" size={24} color="red" />
                         ) : (
@@ -164,22 +172,24 @@ const ResetPassword = () => {
                         )}
                       </View>
                     )}
+
+                    <Pressable
+                      className={`pr-4 absolute ${
+                        !isValid && value ? "right-6" : "right-0"
+                      }`}
+                      onPress={() => {
+                        setShowPassword2(!showPassword2);
+                      }}
+                    >
+                      <Ionicons
+                        name={`${!showPassword2 ? "eye-off" : "eye"}`}
+                        size={24}
+                        color="black"
+                      />
+                    </Pressable>
                   </View>
                 )}
               />
-
-              <Pressable
-                className={`top-3 right-6 absolute pr-4`}
-                onPress={() => {
-                  setShowPassword2(!showPassword2);
-                }}
-              >
-                {!showPassword2 ? (
-                  <Ionicons name="eye-off" size={24} color="black" />
-                ) : (
-                  <Ionicons name="eye" size={24} color="black" />
-                )}
-              </Pressable>
             </View>
 
             <ErrorMessage
@@ -193,10 +203,42 @@ const ResetPassword = () => {
             />
           </View>
 
+          <Modal
+            transparent={true}
+            animationType="slide"
+            visible={modalVisiable}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisiable(!modalVisiable);
+            }}
+          >
+            <View className=" flex-1 justify-center items-center">
+              <View className="gap-5 p-10 mx-3  items-center  bg-white rounded-lg   shadow-gray-200/50 shadow-md ring ">
+                <AntDesign name="checkcircle" size={48} color="green" />
+                <View>
+                  <Text className="font-Poppins-Bold mb-2 text-center text-2xl">
+                    Password Changed!
+                  </Text>
+                  <Text className="text-center font-Poppins text-md">
+                    Your can now use your new password 
+                    to login to your account.
+                  </Text>
+
+                  <TouchableOpacity
+                    className="bg-black py-4 font-Poppins rounded-lg mt-5 "
+                    onPress={() => router.push("/login")}
+                  >
+                    <Text className="text-white text-center">Login</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
           <TouchableOpacity
             className={`${
               isValid ? "bg-primary " : "bg-primary-400"
-            } py-4 font-Poppins  rounded-lg `}
+            } py-4 font-Poppins  rounded-lg mt-3`}
             onPress={handleSubmit(onSubmit)}
             disabled={isSubmitted || !isValid}
           >
