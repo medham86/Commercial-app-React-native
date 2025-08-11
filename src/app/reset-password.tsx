@@ -208,7 +208,7 @@ const ResetPassword = () => {
             animationType="slide"
             visible={modalVisiable}
             onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
+             
               setModalVisiable(!modalVisiable);
             }}
           >
