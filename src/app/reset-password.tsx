@@ -80,8 +80,9 @@ const ResetPassword = () => {
                     } rounded-lg`}
                   >
                     <TextInput
-                      className="flex-1 p-4 font-poppins align-middle"
+                     className="flex-1 p-4 font-Poppins align-middle"
                       placeholder="Enter new password"
+                      placeholderTextColor={'gray'}
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword1}
@@ -102,8 +103,8 @@ const ResetPassword = () => {
                     )}
 
                     <Pressable
-                      className={`pr-4 absolute ${
-                        errors.password1 && value ? "right-6" : "right-0"
+                      className={`pr-5 absolute ${
+                        errors.password1 && value ? "right-6" : value ? "right-6" : "right-0"
                       }`}
                       onPress={() => {
                         setShowPassword1(!showPassword1);
@@ -154,6 +155,7 @@ const ResetPassword = () => {
                     <TextInput
                       className="flex-1 p-4 font-Poppins align-middle"
                       placeholder="Renter new password"
+                      placeholderTextColor={'gray'}
                       value={value}
                       onChangeText={onChange}
                       secureTextEntry={!showPassword2}
@@ -174,8 +176,8 @@ const ResetPassword = () => {
                     )}
 
                     <Pressable
-                      className={`pr-4 absolute ${
-                        !isValid && value ? "right-6" : "right-0"
+                      className={`pr-5 absolute ${
+                        errors.password1 && value ? "right-6" : value ? "right-6" : "right-0"
                       }`}
                       onPress={() => {
                         setShowPassword2(!showPassword2);

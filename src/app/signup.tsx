@@ -191,7 +191,7 @@ const SignUp = () => {
                     )}
 
                     <Pressable
-                      className={`pr-4 ${value && !isValid ? 'right-6' : 'right-0'} top-3 absolute `}
+                      className={`pr-6 ${value && !isValid  ? 'right-6' : isValid ? "right-6" : 'right-0'} top-3 absolute `}
                       onPress={() => {
                         setShowPassword(!showPassword);
                       }}

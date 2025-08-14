@@ -64,9 +64,9 @@ const Login = (props: LoginProps) => {
                         errors.email
                           ? "border-red-500"
                           : value
-                          ? "border-green-500"
-                          : "border-gray-300"
-                      } rounded-lg p-3 font-Poppins pr-10`}
+                            ? "border-green-500"
+                            : "border-gray-300"
+                      } rounded-lg p-3 pr-10 font-Poppins`}
                       placeholder="Enter your email address"
                       keyboardType="email-address"
                       autoCapitalize="none"
@@ -94,12 +94,12 @@ const Login = (props: LoginProps) => {
                 errors={errors}
                 name="email"
                 render={({ message }) => (
-                  <Text className="text-red font-Poppins mt-2">{message}</Text>
+                  <Text className="text-red mt-2 font-Poppins">{message}</Text>
                 )}
               />
             </View>
 
-            <View className=" mb-5">
+            <View className="mb-5">
               <Text className="font-Poppins-medium mb-2 text-gray-700">
                 Password
               </Text>
@@ -114,16 +114,16 @@ const Login = (props: LoginProps) => {
                           errors.password
                             ? "border-red-500"
                             : value
-                            ? "border-green-500"
-                            : "border-gray-300"
-                        } rounded-lg p-3 font-Poppins pr-10`}
+                              ? "border-green-500"
+                              : "border-gray-300"
+                        } rounded-lg p-3 pr-10 font-Poppins`}
                         placeholder="Password"
                         value={value}
                         onChangeText={onChange}
                         secureTextEntry={!showPassword}
                       />
                       {value && (
-                        <View className="absolute right-3 top-3 ">
+                        <View className="absolute right-3 top-3">
                           {errors.password ? (
                             <Feather
                               name="alert-circle"
@@ -139,79 +139,79 @@ const Login = (props: LoginProps) => {
                           )}
                         </View>
                       )}
+
+                      <Pressable
+                        className={`pr-6 ${value && !isValid ? "right-6" : isValid ? "right-6" : "right-0"} absolute top-3`}
+                        onPress={() => {
+                          setShowPassword(!showPassword);
+                        }}
+                      >
+                        {!showPassword ? (
+                          <Ionicons name="eye-off" size={24} color="black" />
+                        ) : (
+                          <Ionicons name="eye" size={24} color="black" />
+                        )}
+                      </Pressable>
                     </View>
                   )}
                 />
-
-                <Pressable
-                  className={`top-3 right-6 absolute pr-4`}
-                  onPress={() => {
-                    setShowPassword(!showPassword);
-                  }}
-                >
-                  {!showPassword ? (
-                    <Ionicons name="eye-off" size={24} color="black" />
-                  ) : (
-                    <Ionicons name="eye" size={24} color="black" />
-                  )}
-                </Pressable>
               </View>
 
               <ErrorMessage
                 errors={errors}
                 name="password"
                 render={({ message }) => (
-                  <Text className="text-red-500 font-Poppins mt-2">
+                  <Text className="mt-2 font-Poppins text-red-500">
                     {message}
                   </Text>
                 )}
               />
             </View>
           </View>
-          <View className="mb-5 flex-row mx-auto">
+          <View className="mx-auto mb-5 flex-row">
             <Text className="font-Poppins">Forgot your password? </Text>
-            <Link href={"/forget-password"} className="underline font-Poppins">
+            <Link href={"/forget-password"} className="font-Poppins underline">
               Forget your password
             </Link>
           </View>
           <TouchableOpacity
             className={`${
-              isValid ? "bg-primary " : "bg-primary-400"
-            } py-4 font-Poppins  rounded-lg `}
+              isValid ? "bg-primary" : "bg-primary-400"
+            } rounded-lg py-4 font-Poppins`}
             onPress={handleSubmit(onsubmit)}
             disabled={isSubmitted || !isValid}
           >
-            <Text className="text-white text-lg text-center  font-Poppins-Bold">
+            <Text className="text-center font-Poppins-Bold text-lg text-white">
               Login
             </Text>
           </TouchableOpacity>
           {/* Divider*/}
-          <View className="flex flex-row items-center gap-5 my-5">
-            <View className="flex-1 h-0.5 bg-slate-300" />
+          <View className="my-5 flex flex-row items-center gap-5">
+            <View className="h-0.5 flex-1 bg-slate-300" />
             <View>
-              <Text className="w-50 ">Or</Text>
+              <Text className="w-50">Or</Text>
             </View>
-            <View className="flex-1 h-0.5 bg-slate-300" />
+            <View className="h-0.5 flex-1 bg-slate-300" />
           </View>
           {/* Social signup buttons*/}
           <View>
-            <TouchableOpacity className="bg-primary-100 mb-4  py-4 rounded-lg ">
-              <View className="flex flex-row items-center gap-3 mx-auto">
+            <TouchableOpacity className="mb-4 rounded-lg bg-primary-100 py-4">
+              <View className="mx-auto flex flex-row items-center gap-3">
                 <Ionicons name="logo-google" size={24} color="" />
                 <Text className="font-Poppins">Sign Up with Google</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity className="bg-secondary mb-4  py-4 rounded-lg ">
-              <View className="flex flex-row items-center gap-3 mx-auto">
+            <TouchableOpacity className="mb-4 rounded-lg bg-secondary py-4">
+              <View className="mx-auto flex flex-row items-center gap-3">
                 <FontAwesome5 name="facebook" size={24} color="white" />
-                <Text className="text-white font-Poppins">
+                <Text className="font-Poppins text-white">
                   Sign Up with Facebook
                 </Text>
               </View>
             </TouchableOpacity>
           </View>
           {/* register links*/}
-          <View className="flex flex-row items-center gap-2 mx-auto">
+          <View className="mx-auto flex flex-row items-center gap-2">
             <Text className="font-Poppins text-primary-600">
               Don’t have an account?
             </Text>
